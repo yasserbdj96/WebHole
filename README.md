@@ -1,6 +1,6 @@
 <!-- Project Header -->
 <div align="center">
-  <img src="https://raw.githubusercontent.com/yasserbdj96/WebHole/main/Screenshots/logo.png" alt="hiphp by yasserbdj96" height="200">
+  <img src="https://raw.githubusercontent.com/yasserbdj96/WebHole/main/Screenshots/logo.png" alt="hiphp by yasserbdj96" height="300">
 </div>
 
 
