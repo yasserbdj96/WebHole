@@ -76,7 +76,7 @@ python main.py
 ```
 
 ## 🌐 Supported Operations
-| Command        | Description                                                   | Example        | go-http-server  | php        | python-django | python-flask |
+| Command        | Description                                                   | Example        | *go-http-server  | *php        | *python-django | *python-flask |
 | :------------: | :-----------------------------------------------------------: | :------------: | :-------------: | :--------: | :-----------: | :----------: |
 | [COMMAND]      | Put your command                                              | [COMMAND]      | ✅              |  ✅        | ✅             | ✅        |
 | ls             | List directory contents                                       | ls             | ✅              |  ✅        | ✅             | ✅        |
