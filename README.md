@@ -144,11 +144,13 @@ webhole/
 ```bash
 ┌──(python-flask@example.com)──[/home/user]
 └─WEBHOLE> ls
-📄 django_server.py       |    📄 flask_server.py        |    📄 go_server.go           |    📄 php_server.php         |    📄 servers_config.json
-📄 server_launcher.py     
+📄 CHANGELOG           |    📄 config.json         |    📄 logo.png            
+📄 main.py             |    📄 README.md           |    📄 requirements.txt
+📁 Tasks               |    📄 version.txt         |    📁 versions            
+📁 webhole
 ┌──(python-flask@example.com)──[/home/user]
-└─WEBHOLE> cd Documents
-┌──(python-flask@example.com)──[/home/user/Documents]
+└─WEBHOLE> cd Tasks
+┌──(python-flask@example.com)──[/home/user/Tasks]
 └─WEBHOLE> tree
 .
 ├─── django_server.py
@@ -157,7 +159,7 @@ webhole/
 ├─── php_server.php
 ├─── server_launcher.py
 └─── servers_config.json
-┌──(python-flask@example.com)──[/home/user/Documents]
+┌──(python-flask@example.com)──[/home/user/Tasks]
 └─WEBHOLE> tree -f
 rrw-rw-rw- Jun 18 14:54     1.54 KB django_server.py
 rrw-rw-rw- Jun 18 14:52     1.30 KB flask_server.py
@@ -165,6 +167,36 @@ rrw-rw-rw- Jun 18 15:20     2.30 KB go_server.go
 rrw-rw-rw- Apr 07 21:22   655 bytes php_server.php
 rrw-rw-rw- Jun 18 15:03   528 bytes servers_config.json
 rrw-rw-rw- Jun 18 14:54     3.00 KB server_launcher.py
+┌──(python-flask@example.com)──[/home/user/Tasks]
+└─WEBHOLE> cat servers_config.json
+{
+  "flask": {
+    "enabled": true,
+    "host": "127.0.0.1",
+    "port": 81,
+    "entry": "flask_server.py"
+  },
+  "php": {
+    "enabled": true,
+    "host": "127.0.0.1",
+    "port": 82,
+    "php_path": "C:\\xampp\\php\\php.exe",
+    "root": ".",
+    "entry": "php_server.php"
+  },
+  "go": {
+    "enabled": true,
+    "entry": "go_server.go",
+    "host": "127.0.0.1",
+    "port": 83
+  },
+  "django": {
+    "enabled": true,
+    "host": "127.0.0.1",
+    "port": 84,
+    "entry": "django_server.py"
+  }
+}
 ```
 
 > ## Screenshots:
