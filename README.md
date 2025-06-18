@@ -6,7 +6,25 @@
 
 # 🕳️ WebHole - Remote File System Explorer
 
-WebHole is a secure client-server tool for exploring remote file systems through a web interface, featuring encrypted communication and cross-platform compatibility.
+WebHole is an advanced, open-source remote access and control tool designed for modern web environments. Unlike its predecessor HIPHP, which was limited to PHP, WebHole supports multiple server-side languages, including PHP, Flask (Python), Go (Golang), and Django, offering unmatched flexibility for developers and administrators.
+
+By injecting a small piece of code—referred to as the WebHole Hole Code—into your project, WebHole enables secure communication over HTTP/HTTPS using POST or GET methods, typically over port 80 or 443. This allows authorized users to perform operations such as file management, script execution, configuration editing, and more, all remotely and in real-time.
+
+Key features include:
+
+ - ✅ Multi-Language Support: Seamlessly works with PHP, Python (Flask & Django), and Go.
+
+ - 🔐 Password-Protected Access: Ensures only authorized users can control the server.
+
+ - 🧱 Modular Architecture: Easily extend or adapt to new environments and frameworks.
+
+ - 🌍 Remote File Execution & Editing: Modify, run, and manage files from any location.
+
+ - 📦 Zero-Dependency Setup: No need for third-party software—just plug the hole code into your project.
+
+Originally inspired by the limitations of HIPHP, WebHole is built for developers, security professionals, and system admins who need granular control over diverse web stacks—without relying on external tools or services.
+
+Whether you're managing a single PHP site or a multi-framework infrastructure, WebHole empowers you with a unified, secure, and developer-friendly backdoor solution.
 
 ## 📦 Components
 ### Client-Side (main.py)
@@ -58,17 +76,18 @@ python main.py
 ```
 
 ## 🌐 Supported Operations
-| Command        | Description                                                   | Example        | go-http-server | php        | python-django | python-flask |
-| :------------: | :-----------------------------------------------------------: | :------------: | :------------: | :--------: | :-----------: | :----------: |
-| [COMMAND]      | Put your command                                              | [COMMAND]      | ✅              |  ✅        | ✅             | ✅           |
-| ls             | List directory contents                                       | ls             | ✅              |  ✅        | ✅             | ✅           |
-| cd             | Change directory                                              | cd [PATH]      | ❌              |  ✅        | ✅             | ✅           |
-| tree           | Show directory tree                                           | tree           | ❌              |  ✅        | ✅             | ✅           |
-| tree -f        | Display directory structure in a tree format with full paths  | tree -f        | ❌              |  ✅        | ✅             | ✅           |
-| cat            | Display file content                                          | cat [file]     | ❌              |  ✅        | ✅             | ✅           |
-| -v             | Show version information                                      | -v             | ✅              |  ✅        | ✅             | ✅           |
-| -h             | Show help	                                                 | -h             | ✅              |  ✅        | ✅             | ✅           |
-| exit           | Exit the shell	                                             | exit           | ✅              |  ✅        | ✅             | ✅           |
+| Command        | Description                                                   | Example        | go-http-server  | php        | python-django | python-flask |
+| :------------: | :-----------------------------------------------------------: | :------------: | :-------------: | :--------: | :-----------: | :----------: |
+| [COMMAND]      | Put your command                                              | [COMMAND]      | ✅              |  ✅        | ✅             | ✅        |
+| ls             | List directory contents                                       | ls             | ✅              |  ✅        | ✅             | ✅        |
+| cd             | Change directory                                              | cd [PATH]      | ❌              |  ✅        | ✅             | ✅        |
+| tree           | Show directory tree                                           | tree           | ❌              |  ✅        | ✅             | ✅        |
+| tree -f        | Display directory structure in a tree format with full paths  | tree -f        | ❌              |  ✅        | ✅             | ✅        |
+| cat            | Display file content                                          | cat [file]     | ❌              |  ✅        | ✅             | ✅        |
+| hole           | Display HOLE Code                                             | hole           | ✅              |  ✅        | ✅             | ✅        |
+| -v             | Show version information                                      | -v             | ✅              |  ✅        | ✅             | ✅        |
+| -h             | Show help	                                                 | -h             | ✅              |  ✅        | ✅             | ✅        |
+| exit           | Exit the shell	                                             | exit           | ✅              |  ✅        | ✅             | ✅        |
 
 ## 🔒 Security Features
 - MD5-hashed authentication keys
@@ -202,8 +221,11 @@ rrw-rw-rw- Jun 18 14:54     3.00 KB server_launcher.py
 > ## Screenshots:
 
 <p align="center">
-  <a href="https://github.com/yasserbdj96/WebHole/blob/db723c36a6b802b6937e5cc755f6cc0da5ba9a81/Screenshots/Screenshot_01.png" target="_blank">
-    <img src="https://github.com/yasserbdj96/WebHole/blob/db723c36a6b802b6937e5cc755f6cc0da5ba9a81/Screenshots/Screenshot_01.png" alt="Preview" width="300">
+  <a href="https://raw.githubusercontent.com/yasserbdj96/WebHole/main/Screenshots/Screenshot_01.png" target="_blank">
+    <img src="https://raw.githubusercontent.com/yasserbdj96/WebHole/main/Screenshots/Screenshot_01.png" alt="Preview" width="300">
+  </a>
+  <a href="https://raw.githubusercontent.com/yasserbdj96/WebHole/main/Screenshots/Screenshot_02.png" target="_blank">
+    <img src="https://raw.githubusercontent.com/yasserbdj96/WebHole/main/Screenshots/Screenshot_02.png" alt="Preview" width="300">
   </a>
 </p>
 
