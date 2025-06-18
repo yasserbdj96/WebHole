@@ -1,0 +1,94 @@
+{
+    "commands": {
+        "ls": {
+            "action": {
+                "type": "function",
+                "handler": "con.connect(cli='ls', path=pwd, **c_params)"
+            },
+            "parameters": {},
+            "output": true,
+            "post_execute": false,
+            "return_list": false
+        },
+        "tree -f": {
+            "action": {
+                "type": "function",
+                "handler": "con.connect(cli='tree -f', path=pwd, cf=False, **c_params)"
+            },
+            "parameters": {},
+            "output": true,
+            "post_execute": false,
+            "return_list": true
+        },
+        "tree": {
+            "action": {
+                "type": "function",
+                "handler": "con.connect(cli='tree', path=pwd, **c_params)"
+            },
+            "parameters": {},
+            "output": true,
+            "post_execute": false,
+            "return_list": false
+        },
+        "cd": {
+            "action": {
+                "type": "function",
+                "handler": "con.connect(cli='cd', path=cmd_parts, **c_params)"
+            },
+            "parameters": {},
+            "output": false,
+            "post_execute": "pwd",
+            "return_list": false
+        },
+        "cat": {
+            "action": {
+                "type": "function",
+                "handler": "con.connect(cli='cat', path=cmd_parts, **c_params)"
+            },
+            "parameters": {},
+            "output": true,
+            "post_execute": false,
+            "return_list": false
+        },
+        "-v": {
+            "action": {
+                "type": "function",
+                "handler": "con.info('__version__','__source__','__package_version__','__package_source__','__author__')"
+            },
+            "parameters": {},
+            "output": true,
+            "post_execute": false,
+            "return_list": false
+        },
+        "-h": {
+            "action": {
+                "type": "function",
+                "handler": "con.help('pkg')"
+            },
+            "parameters": {},
+            "output": true,
+            "post_execute": false,
+            "return_list": false
+        },
+        "hole": {
+            "action": {
+                "type": "function",
+                "handler": "con.hole(pkg=cmd_parts)"
+            },
+            "parameters": {},
+            "output": true,
+            "post_execute": false,
+            "return_list": false
+        },
+        "exit": {
+            "action": {
+                "type": "function",
+                "handler": "exit()"
+            },
+            "parameters": {},
+            "output": false,
+            "post_execute": false,
+            "return_list": false
+        }
+    }
+}

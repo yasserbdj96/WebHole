@@ -1,0 +1,56 @@
+{
+    "package-name": "php",
+    "command-0": "echo 'webhole-php-by-yasserbdj96-:)';",
+    "command-0-output": "webhole-php-by-yasserbdj96-:)",
+    "auto-call":{
+        "DIRECTORY_SEPARATOR": "echo DIRECTORY_SEPARATOR;",
+        "SCRIPT_FILENAME":"echo dirname($_SERVER['SCRIPT_FILENAME']);"
+    },
+    "start": "<?php",
+    "end": "?>",
+    "commands": {
+        "ls": {
+            "command-file": "ls.php",
+            "command-arguments": {"path":"__path__"},
+            "command-function": {"function":"fn_listsort","path":"{self.packages}.__functions__.fn_listsort"},
+            "command-description": "List files in a directory"
+        },
+        "tree": {
+            "command-file": "tree.php",
+            "command-arguments": {"path":"__path__"},
+            "command-description": "Display directory structure in a tree format"
+        },
+        "tree -f": {
+            "command-file": "tree_f.php",
+            "command-arguments": {"path":"__path__"},
+            "command-function": {"function":"fn_listsort","path":"{self.packages}.__functions__.fn_listsort"},
+            "command-description": "Display directory structure in a tree format with full paths"
+        },
+        "cd": {
+            "command-file": "cd.php",
+            "command-arguments": {"path":"__path__"},
+            "command-return":"SCRIPT_FILENAME",
+            "command-default": {"old_path":"{self.SCRIPT_FILENAME}"},
+            "command-description": "Change directory"
+        },
+        "cat":{
+            "command-file": "cat.php",
+            "command-arguments": {"path":"__path__"},
+            "command-return":"{self.file_content}",
+            "command-default": {"old_path":"{self.SCRIPT_FILENAME}"},
+            "command-description": "Display file content"
+        }
+    },
+    "values": {
+        "pwd": {
+            "value-get":"{self.SCRIPT_FILENAME}"
+        },
+        "package_name": {
+            "value-get":"{self.package_name}"
+        },
+        "package_version": "0.0.2-beta",
+        "author":"Author : YasserBdj96\nEmail  : yasserbdj96@gmail.com",
+        "package_source":"https://github.com/yasserbdj96/WebHole"
+    },
+    "hole-code":"hole.php"
+}

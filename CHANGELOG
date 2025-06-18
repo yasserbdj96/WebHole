@@ -1,0 +1,13 @@
+## 0.0.0.0009 [18-06-2025]:
+ - Fixed various bugs in main.py to enhance stability and overall performance..
+ - Introduced the '-h' flag to display help information for available packages..
+ - Added support for the 'ls' command in the Go-based HTTP server.
+ - Enhanced the '-v' command to display detailed information about package sources and the project structure.
+ - Added the '--hole' command to retrieve the WebHole backdoor code for a specified package.
+
+## 0.0.0.0008 [21-04-2025]:
+ - Addressed multiple issues in main.py to improve reliability and functionality.
+ - Implemented the 'tree' and 'tree -f' commands, including their corresponding functions..
+
+## 0.0.0.0006 [07-04-2025]:
+ - Resolved critical bugs in main.py, resulting in improved application stability.

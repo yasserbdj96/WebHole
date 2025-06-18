@@ -1,0 +1,29 @@
+{
+  "error_emoji": "❌",
+  "success_emoji": "✅",
+  "warning_emoji": "⚠️",
+  "messages": {
+      "connection_error": "Connection Error: Failed to connect to '{url}'\nDetails: {details}",
+      "init_error": "Initialization Error: {details}",
+      "connection_failed": "Connection Failed: {details}",
+      "config_not_found": "Config not found at: {path}",
+      "invalid_json": "Invalid JSON in: {path}",
+      "name_mismatch": "Name mismatch: Expected '{expected}', got '{received}'",
+      "cmd_verification_failed": "Command verification failed\nExpected: '{expected}'\nReceived: '{received}'",
+      "invalid_response_format": "Invalid server response format",
+      "missing_config_key": "Missing config key: {key}",
+      "cli_not_found": "CLI template '{cli}' not found",
+      "value_not_found": "Value '{value}' not found",
+      "invalid_params": "Invalid parameter combination",
+      "http_error": "HTTP Error {code}: {reason}",
+      "network_error": "Network Error: {details}",
+      "execution_error": "Execution Error: {details}",
+      "invalid_handshake": "Invalid server handshake",
+      "auth_failed": "Authentication failed",
+      "connection_refused": "Connection refused",
+      "timeout": "Connection timeout",
+      "general_connection": "Connection Error: {details}",
+      "module_error": "Module import failed: {module}",
+      "function_error": "Function not found: {func}"
+  }
+}

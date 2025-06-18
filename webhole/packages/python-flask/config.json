@@ -1,0 +1,60 @@
+{
+    "package-name": "python-flask",
+    "command-0": "print('webhole-python-flask-by-yasserbdj96-:)')",
+    "command-0-output": "webhole-python-flask-by-yasserbdj96-:)",
+    "auto-call":{
+        "DIRECTORY_SEPARATOR": "import os;print(os.sep)",
+        "SCRIPT_FILENAME":"import os;print(os.path.dirname(os.path.abspath(__file__)))",
+        "file_content":"",
+        "error_emoji":"❌",
+        "success_emoji":"✅",
+        "warning_emoji":"⚠️"
+    },
+    "start": "",
+    "end": "",
+    "commands": {
+        "ls": {
+            "command-file": "ls.py",
+            "command-arguments": {"path":"__path__"},
+            "command-function": {"function":"fn_listsort","path":"{self.packages}.__functions__.fn_listsort"},
+            "command-description": "List files in a directory"
+        },
+        "tree": {
+            "command-file": "tree.py",
+            "command-arguments": {"path":"__path__"},
+            "command-description": "Display directory structure in a tree format"
+        },
+        "tree -f": {
+            "command-file": "tree_f.py",
+            "command-arguments": {"path":"__path__"},
+            "command-function": {"function":"fn_listsort","path":"{self.packages}.__functions__.fn_listsort"},
+            "command-description": "Display directory structure in a tree format with full paths"
+        },
+        "cd": {
+            "command-file": "cd.py",
+            "command-arguments": {"path":"__path__"},
+            "command-return":"SCRIPT_FILENAME",
+            "command-default": {"old_path":"{self.SCRIPT_FILENAME}"},
+            "command-description": "Change directory"
+        },
+        "cat":{
+            "command-file": "cat.py",
+            "command-arguments": {"path":"__path__"},
+            "command-return":"{self.file_content}",
+            "command-default": {"old_path":"{self.SCRIPT_FILENAME}"},
+            "command-description": "Display file content"
+        }
+    },
+    "values": {
+        "pwd": {
+            "value-get":"{self.SCRIPT_FILENAME}"
+        },
+        "package_name": {
+            "value-get":"{self.package_name}"
+        },
+        "package_version": "0.0.2-beta",
+        "author":"Author : YasserBdj96\nEmail  : yasserbdj96@gmail.com",
+        "package_source":"https://github.com/yasserbdj96/WebHole"
+    },
+    "hole-code":"hole.py"
+}

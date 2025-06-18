@@ -1,0 +1,28 @@
+{
+  "flask": {
+    "enabled": true,
+    "host": "127.0.0.1",
+    "port": 81,
+    "entry": "flask_server.py"
+  },
+  "php": {
+    "enabled": true,
+    "host": "127.0.0.1",
+    "port": 82,
+    "php_path": "C:\\xampp\\php\\php.exe",
+    "root": ".",
+    "entry": "php_server.php"
+  },
+  "go": {
+    "enabled": true,
+    "entry": "go_server.go",
+    "host": "127.0.0.1",
+    "port": 83
+  },
+  "django": {
+    "enabled": true,
+    "host": "127.0.0.1",
+    "port": 84,
+    "entry": "django_server.py"
+  }
+}
