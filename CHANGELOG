@@ -1,6 +1,13 @@
+## 0.0.0.10 [09-08-2025]:
+ - Fixed multiple bugs in main.py to improve stability and overall performance.
+ - Updated source URLs.
+ - Added --pkgs command to display installed packages.
+ - Added --nkey option for creating new hole codes with an automatically encrypted password.
+ - Updated README and screenshots.
+
 ## 0.0.0.0009 [18-06-2025]:
- - Fixed various bugs in main.py to enhance stability and overall performance..
- - Introduced the '-h' flag to display help information for available packages..
+ - Fixed various bugs in main.py to enhance stability and overall performance.
+ - Introduced the '-h' flag to display help information for available packages.
  - Added support for the 'ls' command in the Go-based HTTP server.
  - Enhanced the '-v' command to display detailed information about package sources and the project structure.
  - Added the '--hole' command to retrieve the WebHole backdoor code for a specified package.

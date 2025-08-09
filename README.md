@@ -29,12 +29,17 @@ Whether you're managing a single PHP site or a multi-framework infrastructure, W
 ## 📦 Components
 ### Client-Side (main.py)
 ```bash
-usage: main.py [-h] [--KEY KEY] [--URL URL]
+usage: main.py [-h] [--KEY KEY] [--URL URL] [--HOLE HOLE] [--NKEY NKEY] [--PKGS]
+
+Webhole Command-Line Interface: Configure keys, URLs, and manage packages.
 
 options:
-  -h, --help     show this help message
-  --KEY, --key   Authentication key
-  --URL, --url   Server endpoint URL
+  -h, --help                   Show this help message and exit.
+  --KEY KEY, --key KEY         Authentication key used for secure operations. Can be provided via the KEY environment variable.
+  --URL URL, --url URL         Target URL for the operation. Can be provided via the URL environment variable.
+  --HOLE HOLE, --hole HOLE     Hole identifier or reference. Can be provided via the HOLE environment variable.
+  --NKEY NKEY, --nkey NKEY     New authentication key for updating or replacing an existing key. Can be provided via the NKEY environment variable.       
+  --PKGS, --pkgs               Display all installed packages in Webhole. Can be enabled via the PKGS environment variable.
 ```
 
 ### Server-Side (hole.[py,php,go...])
@@ -53,26 +58,38 @@ execution:
 ```
 
 ## ⚙️ Setup & Usage
-1. Server Setup
+1. tool Setup
 ```bash
-# Install dependencies
-pip install flask
+# Clone the WebHole repository
+git clone https://github.com/yasserbdj96/WebHole.git
 
-# Start server (modify key in hole.[py,php,go...] first)
-start hole.[py,php,go...]
+# Navigate to the project directory
+cd WebHole
+
+# Install the required dependencies
+pip install -r requirements.txt
 ```
 
 2. Client Connection
 ```bash
-# Linux/macOS
-export KEY="your_secret_key"
-export URL="http://server-ip:port"
-python main.py
+# Connect to an existing WebHole instance
+python main.py --URL="http://server-ip:port" --KEY="your_secret_key"
 
-# Windows
-set KEY="your_secret_key"
-set URL="http://server-ip:port"
-python main.py
+# Display installed packages on the WebHole
+python main.py --pkgs
+# Example output:
+# go-http-server   → 0.0.1-beta
+# php              → 0.0.2-beta
+# python-django    → 0.0.0-beta
+# python-flask     → 0.0.2-beta
+
+# Create a new WebHole code for a specific platform (Flask, Django, Go, PHP, etc.)
+
+# Without a password (you can set one manually later):
+python main.py --hole="package_name"
+
+# With a specified password (encrypted automatically):
+python main.py --hole="package_name" --nkey="your_new_key"
 ```
 
 ## 🌐 Supported Operations
@@ -86,8 +103,8 @@ python main.py
 | cat            | Display file content                                          | cat [file]     | ❌              |  ✅        | ✅             | ✅        |
 | hole           | Display HOLE Code                                             | hole           | ✅              |  ✅        | ✅             | ✅        |
 | -v             | Show version information                                      | -v             | ✅              |  ✅        | ✅             | ✅        |
-| -h             | Show help	                                                 | -h             | ✅              |  ✅        | ✅             | ✅        |
-| exit           | Exit the shell	                                             | exit           | ✅              |  ✅        | ✅             | ✅        |
+| -h             | Show help	                                                   | -h             | ✅              |  ✅        | ✅             | ✅        |
+| exit           | Exit the shell	                                               | exit           | ✅              |  ✅        | ✅             | ✅        |
 
 ## 🔒 Security Features
 - MD5-hashed authentication keys

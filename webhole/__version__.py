@@ -14,6 +14,8 @@
 #   |                                                         |   #
 
 #START{
-__version__="0.0.0.0009"
+__version__="0.0.0.10"
 __source__="https://github.com/yasserbdj96/WebHole"
+__author__="yasserbdj96"
+__website__="https://yasserbdj96.github.io/"
 #}END.

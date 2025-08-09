@@ -54,7 +54,7 @@
         },
         "package_version": "0.0.0-beta",
         "author":"Author : YasserBdj96\nEmail  : yasserbdj96@gmail.com",
-        "package_source":"https://github.com/yasserbdj96/WebHole"
+        "package_source":"https://github.com/yasserbdj96/WebHole/tree/main/webhole/packages/python-django"
     },
     "hole-code":"hole.py"
 }

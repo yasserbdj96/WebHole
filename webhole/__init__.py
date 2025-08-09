@@ -28,7 +28,7 @@ import re
 sys.stdout.reconfigure(encoding='utf-8')
 
 class webhole:
-    def __init__(self, url=None, user_key=None, Return=True, hole=None):
+    def __init__(self, url=None, user_key=None, Return=True, hole=None, nkey=None, pkgs=False):
         self.Return = Return
         self.messages = []  # To collect error messages
         self.fatal_error = False  # Indicates if initialization failed
@@ -43,14 +43,19 @@ class webhole:
 
         if hole is not None:
             self.package_name = None
-            print(self.hole(pkg=hole))
+            if nkey is not None:
+                print(self.hole(pkg=hole,nkey=nkey))
+            else:
+                print(self.hole(pkg=hole))
             return 
+
+        if pkgs:
+            print(self.pkgs())
+            return
 
         self.url = url_fix(url)
         self.user_key = tomd5(user_key)
         self.header = {'User-Agent': self.user_key}
-
-        
 
         try:
             self.is_connect, self.connect_one = self.first_connect()
@@ -286,7 +291,7 @@ class webhole:
             result.append(f"{key} : {description}")
         return "\n".join(result)
     
-    def hole(self,pkg=None):
+    def hole(self,pkg=None,nkey=None):
         if pkg is None:
             pkg = self.package_name
         config_path = os.path.dirname(__file__)+"/"+self.packages+"/"+pkg+"/config.json"
@@ -296,12 +301,29 @@ class webhole:
         file_path = os.path.dirname(__file__)+"/"+self.packages+"/"+pkg+"/"+hole
         with open(file_path, 'r', encoding='utf-8') as file:
             content = file.read()
+            if nkey is not None:
+                content = content.replace("__key__", nkey)
         return content
-    """
-    def iserror(self,msg):"""
-        
+    
 
+    def pkgs(self):
+        results = []
+        search_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "packages")
 
+        for root, dirs, files in os.walk(search_path):
+            if "config.json" in files:
+                file_path = os.path.join(root, "config.json")
+                try:
+                    with open(file_path, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                        name = data.get("package-name")
+                        version = data.get("values", {}).get("package_version")
+                        if name:
+                            results.append(f"{name} → {version}")
+                except Exception as e:
+                    print(f"Error reading {file_path}: {e}")
+
+        return "\n".join(results)  # joins all lines in one string
 
 # Example usage
 '''
