@@ -58,7 +58,7 @@ execution:
 ```
 
 ## ⚙️ Setup & Usage
-1. tool Setup
+1. Setup
 ```bash
 # Clone the WebHole repository
 git clone https://github.com/yasserbdj96/WebHole.git
@@ -248,3 +248,21 @@ rrw-rw-rw- Jun 18 14:54     3.00 KB server_launcher.py
 
 > ## 🚨 Warning
 > Always use in trusted environments - command execution capabilities pose security risks if misconfigured.
+
+
+<br>
+<br>
+
+<p align="center">
+  <samp>
+    <a href="https://yasserbdj96.github.io/">Website</a> .
+    <a href="https://github.com/yasserbdj96">Github</a> .
+    <a href="https://instagram.com/yasserbdj96">Instagram</a> .
+    <a href="https://www.youtube.com/@yasserbdj96">youtube</a> .
+    <a href="https://pypi.org/user/yasserbdj96">pypi</a> .
+    <a href="https://hub.docker.com/u/yasserbdj96">docker</a> .
+    <a href="https://gitter.im/yasserbdj96/yasserbdj96">gitter</a> .
+    <a href="mailto:yasser.bdj96@gmail.com">e-mail</a> .
+    <a href="https://github.com/sponsors/yasserbdj96">sponsor</a>
+  </samp>
+</p>
