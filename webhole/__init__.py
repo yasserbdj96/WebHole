@@ -24,6 +24,7 @@ from webhole.modules.del_line_startswith import del_line_startwith
 from webhole.__version__ import __version__,__source__
 import json
 import re
+import curses
 
 sys.stdout.reconfigure(encoding='utf-8')
 
@@ -39,7 +40,7 @@ class webhole:
         self.__package_source__ = None
 
         self.packages = "packages"
-        self.config = "config.json"
+        self.config_file = "config.json"
 
         if hole is not None:
             self.package_name = None
@@ -75,7 +76,7 @@ class webhole:
 
         try:
             self.pakg_name = self.connect_one.split("#")[1]
-            config_path = os.path.join(os.path.dirname(__file__), self.packages, self.pakg_name, self.config)
+            config_path = os.path.join(os.path.dirname(__file__), self.packages, self.pakg_name, self.config_file)
 
             try:
                 with open(config_path, "r", encoding="utf-8") as file:
@@ -284,11 +285,16 @@ class webhole:
     def info(self, *infos):
         return "\n".join(f"{getattr(self, info, 'Attribute not found')}" for info in infos)
     
-    def help(self):
+    def help(self, pkg=None):
         result = []
         for key, value in self.data["commands"].items():
             description = value.get("command-description", "No description")
             result.append(f"{key} : {description}")
+        
+        if pkg:  # if user passed a package name, filter or show details
+            #return f"Help for {pkg}:\n" + "\n".join(result)
+            return "\n".join(result)
+
         return "\n".join(result)
     
     def hole(self,pkg=None,nkey=None):
@@ -324,6 +330,151 @@ class webhole:
                     print(f"Error reading {file_path}: {e}")
 
         return "\n".join(results)  # joins all lines in one string
+
+    def editor(self, text=""):
+        def _editor(stdscr):
+            xxvo = True
+            s = stdscr
+            s.nodelay(0)
+            curses.noecho()
+            curses.raw()
+            s.keypad(True)
+
+            # Buffer initialization
+            b = []
+            R, C = s.getmaxyx()
+            x, y, r, c = [0] * 4  # scrolling and cursor positions
+
+            # Load string into buffer
+            cont = text.split("\n")
+            for rw in cont:
+                b.append([ord(ch) for ch in rw])
+
+            if not b:
+                b.append([])
+
+            result = None
+
+            while xxvo:
+                s.erase()
+
+                # Scroll handling
+                if r < y:
+                    y = r
+                if r >= y + R:
+                    y = r - R + 1
+                if c < x:
+                    x = c
+                if c >= x + C:
+                    x = c - C + 1
+
+                # Draw screen
+                for rw in range(R):
+                    brw = rw + y
+                    if brw >= len(b):
+                        break
+                    line = b[brw]
+                    for cl in range(C):
+                        bcl = cl + x
+                        if bcl >= len(line):
+                            break
+                        try:
+                            s.addch(rw, cl, line[bcl])
+                        except curses.error:
+                            pass
+                    s.clrtoeol()
+
+                # Move cursor
+                try:
+                    curses.curs_set(1)
+                except curses.error:
+                    pass
+                s.move(r - y, c - x)
+                s.refresh()
+
+                ch = s.getch()
+
+                # Text input (ASCII only)
+                if ch != ((ch) & 0x1f) and ch < 128:
+                    b[r].insert(c, ch)
+                    c += 1
+
+                elif ch in (10, 13):  # Enter
+                    l = b[r][c:]
+                    b[r] = b[r][:c]
+                    r += 1
+                    c = 0
+                    b.insert(r, l)
+
+                elif ch in (8, 263):  # Backspace
+                    if c:
+                        c -= 1
+                        del b[r][c]
+                    elif r:
+                        l = b[r][c:]
+                        del b[r]
+                        r -= 1
+                        c = len(b[r])
+                        b[r] += l
+
+                elif ch == curses.KEY_LEFT:
+                    if c > 0:
+                        c -= 1
+                    elif r > 0:
+                        r -= 1
+                        c = len(b[r])
+
+                elif ch == curses.KEY_RIGHT:
+                    if c < len(b[r]):
+                        c += 1
+                    elif r < len(b) - 1:
+                        r += 1
+                        c = 0
+
+                elif ch == curses.KEY_UP and r > 0:
+                    r -= 1
+
+                elif ch == curses.KEY_DOWN and r < len(b) - 1:
+                    r += 1
+
+                # Keep cursor inside line bounds
+                rw = b[r] if r < len(b) else None
+                rwlen = len(rw) if rw is not None else 0
+                if c > rwlen:
+                    c = rwlen
+
+                # Quit (Ctrl+Q)
+                if ch == (ord("c") & 0x1f):
+                    xxvo = False
+                    result = None
+
+                # Save (Ctrl+S)
+                elif ch == (ord("s") & 0x1f):
+                    cont = ""
+                    for l in b:
+                        cont += "".join([chr(c) for c in l]) + "\n"
+                    result = cont.rstrip("\n")
+                    xxvo = False
+
+            # inside _editor return block
+            if result is None:
+                return ""   # instead of None
+            return result
+
+        # wrapper handles init/reset, no need for savetty/resetty
+        return curses.wrapper(_editor)
+
+    def config(self):
+        config_path = os.path.join(
+        os.path.dirname(__file__),
+        self.packages,
+        self.pakg_name,
+        self.config_file
+        )
+        return config_path
+
+
+
 
 # Example usage
 '''

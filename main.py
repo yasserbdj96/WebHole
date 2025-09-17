@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #START{
 from webhole import webhole
 from webhole.__version__ import __version__,__source__,__author__,__website__
@@ -7,6 +8,12 @@ from hexor import *
 import json
 import sys
 import hashlib
+import base64
+from pathlib import Path
+import sys
+import time
+import threading
+import itertools
 
 # Create an ArgumentParser object
 parser = argparse.ArgumentParser(
@@ -59,12 +66,38 @@ def match_command(user_input, commands_json):
     command_config = commands_json[base_command]
     return command_config, base_command, remaining_args[0] if remaining_args else None
 
-def process_logo(logo_lines, version, source,author,website, color_map=None):
+# Animation function
+def animate(text, stop_event):
+    while not stop_event.is_set():
+        for dots in range(4):
+            sys.stdout.write(f"\r{text}{'.' * dots}   ")
+            sys.stdout.flush()
+            time.sleep(0.5)
+
+# 🔄 Professional spinner with multiple styles
+def spinner(text, stop_event, style="line"):
+    spinners = {
+        "line": ["|", "/", "-", "\\"],
+        "dots": ["⠋","⠙","⠸","⠴","⠦","⠇"],
+        "circle": ["◐","◓","◑","◒"],
+        "emoji": ["🌑","🌒","🌓","🌔","🌕","🌖","🌗","🌘"],  # moon phases
+        "arrow": ["←","↖","↑","↗","→","↘","↓","↙"],
+        "pulse": ["▁","▃","▄","▅","▆","▇","█","▇","▆","▅","▄","▃"],
+    }
+
+    symbols = spinners.get(style, spinners["line"])
+    for symbol in itertools.cycle(symbols):
+        if stop_event.is_set():
+            break
+        sys.stdout.write(f"\r{text} {symbol} ")
+        sys.stdout.flush()
+        time.sleep(0.1)  # adjust speed here
+
+def process_logo(logo_lines, logo_color, version, source,author,website,package_version, color_map=None):
     if color_map is None:
         color_map = {
-            '░': f'{color.c("░", c_blue)}',  # Blue
-            '▄': f'{color.c("▄", c_green)}',  # Green
-            '▀': f'{color.c("▀", c_yellow)}',  # Yellow
+            char: color.c(char, globals()[clr])   # lookup color variable like c_green, c_yellow
+            for char, clr in logo_color.items()
         }
     
     # Join all lines with newlines
@@ -78,30 +111,46 @@ def process_logo(logo_lines, version, source,author,website, color_map=None):
     result = result.replace("__source__", source)
     result = result.replace("__author__", author)
     result = result.replace("__website__", website)
+    result = result.replace("__package_version__", package_version)
     return result
 
 if URL!=str('None') and KEY!=str('None'):
     try:
+        # Start animation
+        stop_event = threading.Event()
+        anim_thread = threading.Thread(target=spinner, args=("Connecting", stop_event, "dots"))
+        anim_thread.start()
         con=webhole(url=URL, user_key=KEY)
+        # Stop animation
+        stop_event.set()
+        anim_thread.join()
+        sys.stdout.write("\r")
         if con.fatal_error:
             print("🔥 Critical Errors:")
+            time.sleep(0.5)
             for idx, err in enumerate(con.messages, 1):
                 print(f"{idx}. {err}")
             sys.exit(1)  # Exit if initialization failed
         else:
             # Proceed with normal operations
             print("✅ Connection successful!")
+            time.sleep(0.5)
             package_name=con.connect(value="package_name")
     except:
         exit()
 
-    # Read JSON file
-    with open("config.json", "r", encoding="utf-8") as file:
-        cmd_data  = json.load(file)  # Load JSON into a dictionary
-        logo = cmd_data["logo"]  # Get the "logo" key
-        cmd_data = cmd_data["commands"]  # Access the "commands" key
+    config_file=con.config()
 
-    print(process_logo(logo,__version__,__source__,__author__,__website__))
+    # Read JSON file
+    with open(config_file, "r", encoding="utf-8") as file:
+        cmd_data  = json.load(file)  # Load JSON into a dictionary
+        package_version = cmd_data["values"]["package_version"]
+        logo = cmd_data["logo"]  # Get the "logo" key
+        logo_color = cmd_data["logo_color"]
+        cmd_data = cmd_data["commands"]  # Access the "commands" key
+        
+
+    print(process_logo(logo,logo_color,__version__,__source__,__author__,__website__,package_version))
 
     xxr1=color.c('┌──(', c_green)
     xxr2=color.c(')──[', c_green)
@@ -121,6 +170,10 @@ if URL!=str('None') and KEY!=str('None'):
                 continue
             
             cmd_options,cmd,cmd_parts = match_command(command, cmd_data)
+            other_parts=str(command).split()[2:]
+            other_parts = other_parts if other_parts else ['None']
+            #print(other_parts)
+
             
             if cmd_options is not None and cmd is not None:
                 c_action = cmd_options["action"]
@@ -128,6 +181,7 @@ if URL!=str('None') and KEY!=str('None'):
                 c_output = cmd_options["output"]
                 c_post_execute = cmd_options["post_execute"]
                 c_return_list = cmd_options["return_list"]
+                c_with_function = cmd_options["with_function"]
 
                 for key, value in c_params.items():
                     if isinstance(value, str) and value.strip().startswith("con.connect"):
@@ -157,6 +211,10 @@ if URL!=str('None') and KEY!=str('None'):
                             print(item)
                     else:
                         print("❌ Error: Expected a list but got:", type(output))
+                
+                if not isinstance(c_with_function, bool):
+                    for func_call in c_with_function:
+                        eval(func_call)
             
             else:
                 print(con.connect(command))

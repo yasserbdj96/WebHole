@@ -17,7 +17,71 @@
             "command-file": "ls.go",
             "command-arguments": {"path":"__path__"},
             "command-function": {"function":"fn_listsort","path":"{self.packages}.__functions__.fn_listsort"},
-            "command-description": "List files in a directory"
+            "command-description": "List files in a directory",
+            "action": {
+                "type": "function",
+                "handler": "con.connect(cli='ls', path=pwd, **c_params)"
+            },
+            "parameters": {},
+            "output": true,
+            "post_execute": false,
+            "return_list": false,
+            "with_function": false
+        },
+        "-v": {
+            "action": {
+                "type": "function",
+                "handler": "con.info('__version__','__source__','__package_version__','__package_source__','__author__')"
+            },
+            "parameters": {},
+            "output": true,
+            "post_execute": false,
+            "return_list": false,
+            "with_function": false
+        },
+        "-h": {
+            "action": {
+                "type": "function",
+                "handler": "con.help('pkg')"
+            },
+            "parameters": {},
+            "output": true,
+            "post_execute": false,
+            "return_list": false,
+            "with_function": false
+        },
+        "hole": {
+            "action": {
+                "type": "function",
+                "handler": "con.hole(pkg=cmd_parts,nkey=NKEY)"
+            },
+            "parameters": {},
+            "output": true,
+            "post_execute": false,
+            "return_list": false,
+            "with_function": false
+        },
+        "pkgs": {
+            "action": {
+                "type": "function",
+                "handler": "con.pkgs()"
+            },
+            "parameters": {},
+            "output": true,
+            "post_execute": false,
+            "return_list": false,
+            "with_function": false
+        },
+        "exit": {
+            "action": {
+                "type": "function",
+                "handler": "exit()"
+            },
+            "parameters": {},
+            "output": false,
+            "post_execute": false,
+            "return_list": false,
+            "with_function": false
         }
     },
     "values": {
@@ -31,5 +95,36 @@
         "author":"Author : YasserBdj96\nEmail  : yasserbdj96@gmail.com",
         "package_source":"https://github.com/yasserbdj96/WebHole/tree/main/webhole/packages/go-http-server"
     },
-    "hole-code":"hole.go"
+    "hole-code":"hole.go",
+            "logo": [
+            "",
+            "    ██╗    ██╗███████╗██████╗ ██╗  ██╗ ██████╗ ██╗     ███████╗",
+            "    ██║    ██║██╔════╝██╔══██╗██║  ██║██╔═══██╗██║     ██╔════╝",
+            "    ██║ █╗ ██║█████╗  ██████╔╝███████║██║   ██║██║     █████╗  ",
+            "    ██║███╗██║██╔══╝  ██╔══██╗██╔══██║██║   ██║██║     ██╔══╝  ",
+            "    ╚███╔███╔╝███████╗██████╔╝██║  ██║╚██████╔╝███████╗███████╗",
+            "     ╚══╝╚══╝ ╚══════╝╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝",
+            "",
+            "    ⚡ WebHole -  P Y T H O N   •  G O  (v__package_version__)         ⚡",
+            "",
+            "   +────────────────────────────────────────────────────────────+",
+            "      🛠️ Coded by: __author__ ",
+            "      🌐 Website : https://yasserbdj96.github.io/ ",
+            "      💾 Source  : __source__ ",
+            "      📦 Build   : __version__ ",
+            "   +────────────────────────────────────────────────────────────+",
+            ""
+        ],
+    "logo_color": {
+        "█": "c_green",
+        "═": "c_yellow",
+        "╚": "c_yellow",
+        "╝": "c_yellow",
+        "╗": "c_yellow",
+        "╔": "c_yellow",
+        "║": "c_yellow",
+        "─": "c_yellow",
+        "+": "c_yellow"
+
+    }
 }
