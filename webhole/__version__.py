@@ -18,4 +18,6 @@ __version__="0.0.0.11"
 __source__="https://github.com/yasserbdj96/WebHole"
 __author__="yasserbdj96"
 __website__="https://yasserbdj96.github.io/"
+__usdt__="TSgBq1UECESqmei3JGpSMiXhbAoDVz9FJy"
+__btc__="1AgAZQjKLQkqU64NNVXfn1LZvzaojLHoXj"
 #}END.
