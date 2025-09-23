@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #START{
 from webhole import webhole
-from webhole.__version__ import __version__,__source__,__author__,__website__,__usdt__,__btc__
+from webhole.__version__ import __version__,__source__,__author__,__website__,__usdt__,__btc__,__paypal__
 import argparse
 import os
 from hexor import *
@@ -93,7 +93,7 @@ def spinner(text, stop_event, style="line"):
         sys.stdout.flush()
         time.sleep(0.1)  # adjust speed here
 
-def process_logo(logo_lines, logo_color, version, source,author,website,package_version, usdt, btc, color_map=None):
+def process_logo(logo_lines, logo_color, version, source,author,website,package_version, usdt, btc,paypal, color_map=None):
     if color_map is None:
         color_map = {
             char: color.c(char, globals()[clr])   # lookup color variable like c_green, c_yellow
@@ -114,6 +114,7 @@ def process_logo(logo_lines, logo_color, version, source,author,website,package_
     result = result.replace("__package_version__", package_version)
     result = result.replace("__usdt__", usdt)
     result = result.replace("__btc__", btc)
+    result = result.replace("__paypal__", paypal)
     return result
 
 if URL!=str('None') and KEY!=str('None'):
@@ -152,7 +153,7 @@ if URL!=str('None') and KEY!=str('None'):
         cmd_data = cmd_data["commands"]  # Access the "commands" key
         
 
-    print(process_logo(logo,logo_color,__version__,__source__,__author__,__website__,package_version, __usdt__, __btc__))
+    print(process_logo(logo,logo_color,__version__,__source__,__author__,__website__,package_version, __usdt__, __btc__,__paypal__))
 
     xxr1=color.c('┌──(', c_green)
     xxr2=color.c(')──[', c_green)

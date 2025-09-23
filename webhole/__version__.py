@@ -20,4 +20,5 @@ __author__="yasserbdj96"
 __website__="https://yasserbdj96.github.io/"
 __usdt__="TSgBq1UECESqmei3JGpSMiXhbAoDVz9FJy"
 __btc__="1AgAZQjKLQkqU64NNVXfn1LZvzaojLHoXj"
+__paypal__="https://www.paypal.com/ncp/payment/SJMUZV7QZ982G"
 #}END.
