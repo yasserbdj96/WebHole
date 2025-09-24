@@ -10,7 +10,6 @@ import sys
 import hashlib
 import base64
 from pathlib import Path
-import sys
 import time
 import threading
 import itertools
@@ -142,15 +141,16 @@ if URL!=str('None') and KEY!=str('None'):
     except:
         exit()
 
-    config_file=con.config()
+    config_data=con.config()
+    cmd_data,package_version,logo,logo_color,cmd_data=config_data
 
-    # Read JSON file
+    '''# Read JSON file
     with open(config_file, "r", encoding="utf-8") as file:
         cmd_data  = json.load(file)  # Load JSON into a dictionary
         package_version = cmd_data["values"]["package_version"]
         logo = cmd_data["logo"]  # Get the "logo" key
         logo_color = cmd_data["logo_color"]
-        cmd_data = cmd_data["commands"]  # Access the "commands" key
+        cmd_data = cmd_data["commands"]  # Access the "commands" key'''
         
 
     print(process_logo(logo,logo_color,__version__,__source__,__author__,__website__,package_version, __usdt__, __btc__,__paypal__))

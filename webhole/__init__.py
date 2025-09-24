@@ -286,16 +286,43 @@ class webhole:
         return "\n".join(f"{getattr(self, info, 'Attribute not found')}" for info in infos)
     
     def help(self, pkg=None):
+        commands = self.data["commands"]
+
+        # Separate commands automatically
+        core_cmds = {}
+        pkg_cmds = {}
+
+        for cmd, details in commands.items():
+            desc = details.get("command-description", "No description")
+            emoji = details.get("command-emoji", "👉")
+            if cmd.startswith("-"):
+                pkg_cmds[cmd] = [desc, emoji]
+            else:
+                core_cmds[cmd] = [desc, emoji]
+
         result = []
-        for key, value in self.data["commands"].items():
-            description = value.get("command-description", "No description")
-            result.append(f"{key} : {description}")
-        
-        if pkg:  # if user passed a package name, filter or show details
-            #return f"Help for {pkg}:\n" + "\n".join(result)
-            return "\n".join(result)
+        result.append(f"📖 WebHole Command Reference — {self.package_name}")
+        result.append("─" * 60)
+
+        # Core Commands
+        result.append(" Core Commands:")
+        result.append("─" * 40)
+        for cmd, desc in core_cmds.items():
+            result.append(f"{desc[1]:<1}  {cmd:<8} : {desc[0]}")
+
+        result.append("")
+        result.append("📦 Package & Source Management:")
+        result.append("─" * 40)
+        for cmd, desc in pkg_cmds.items():
+            result.append(f"{desc[1]:<1}  {cmd:<8} : {desc[0]}")
+
+        result.append("")
+        #result.append("─" * 60)
+        #result.append(" Tip: Use `command --help` for more details")
+        #result.append("─" * 60)
 
         return "\n".join(result)
+
     
     def hole(self,pkg=None,nkey=None):
         if pkg is None:
@@ -471,7 +498,13 @@ class webhole:
         self.pakg_name,
         self.config_file
         )
-        return config_path
+        with open(config_path, "r", encoding="utf-8") as file:
+            cmd_data  = json.load(file)  # Load JSON into a dictionary
+            package_version = cmd_data["values"]["package_version"]
+            logo = cmd_data["logo"]  # Get the "logo" key
+            logo_color = cmd_data["logo_color"]
+            cmd_data = cmd_data["commands"]  # Access the "commands" key
+        return cmd_data,package_version,logo,logo_color,cmd_data
 
 
 

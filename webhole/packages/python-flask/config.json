@@ -17,7 +17,8 @@
             "command-file": "ls.py",
             "command-arguments": {"path":"__path__"},
             "command-function": {"function":"fn_listsort","path":"{self.packages}.__functions__.fn_listsort"},
-            "command-description": "List the contents of a directory",
+            "command-description": "[ls] → List the contents of the current directory.",
+            "command-emoji":"📂",
             "action": {
                 "type": "function",
                 "handler": "con.connect(cli='ls', path=pwd, **c_params)"
@@ -31,7 +32,8 @@
         "tree": {
             "command-file": "tree.py",
             "command-arguments": {"path":"__path__"},
-            "command-description": "Display the directory structure in a tree view",
+            "command-description": "[tree] → Display the directory structure in a tree view",
+            "command-emoji":"🌲",
              "action": {
                 "type": "function",
                 "handler": "con.connect(cli='tree', path=pwd, **c_params)"
@@ -46,7 +48,8 @@
             "command-file": "tree_f.py",
             "command-arguments": {"path":"__path__"},
             "command-function": {"function":"fn_listsort","path":"{self.packages}.__functions__.fn_listsort"},
-            "command-description": "Display the directory structure in a tree view with full file paths",
+            "command-description": "[tree -f] → Display the directory structure in a tree view with full file paths",
+            "command-emoji":"🌲",
             "action": {
                 "type": "function",
                 "handler": "con.connect(cli='tree -f', path=pwd, cf=False, **c_params)"
@@ -62,7 +65,8 @@
             "command-arguments": {"path":"__path__"},
             "command-return":"SCRIPT_FILENAME",
             "command-default": {"old_path":"{self.SCRIPT_FILENAME}"},
-            "command-description": "Change the current working directory",
+            "command-description": "[cd] [PATH] → Change the current working directory",
+            "command-emoji":"📁",
             "action": {
                 "type": "function",
                 "handler": "con.connect(cli='cd', path=cmd_parts, **c_params)"
@@ -78,7 +82,8 @@
             "command-arguments": {"path":"__path__"},
             "command-return":"{self.file_content}",
             "command-default": {"old_path":"{self.SCRIPT_FILENAME}"},
-            "command-description": "Display the contents of a file",
+            "command-description": "[cat] [PATH] → Display the contents of a file",
+            "command-emoji":"📄",
             "action": {
                 "type": "function",
                 "handler": "con.connect(cli='cat', path=cmd_parts, **c_params)"
@@ -93,7 +98,8 @@
             "command-file": "edit.py",
             "command-arguments": {"path":"__path__","new_b64_text":"__new_b64_text__"},
             "command-default": {"old_path":"{self.SCRIPT_FILENAME}"},
-            "command-description": "Open and edit a file",
+            "command-description": "[edit] [PATH] → Open and edit a file",
+            "command-emoji":"✏️",
              "action": {
                 "type": "function",
                 "handler": "con.connect(cli='edit', path=pwd.strip()+con.DIRECTORY_SEPARATOR.strip()+cmd_parts.strip(), new_b64_text=base64.b64encode(con.editor(con.connect(cli='cat', path=cmd_parts, **c_params)).encode('utf-8')).decode('utf-8'))"
@@ -104,11 +110,28 @@
             "return_list": false,
             "with_function": false
         },
+        "down":{
+            "command-file": "cat.py",
+            "command-arguments": {"path":"__path__"},
+            "command-default": {"old_path":"{self.SCRIPT_FILENAME}"},
+            "command-description": "[down] [SRC] [DST] → Download a file (source → destination)",
+            "command-emoji":"📥",
+             "action": {
+                "type": "function",
+                "handler": "open((other_parts[0] if other_parts and os.path.splitext(other_parts[0])[1] else os.path.join(other_parts[0], os.path.basename(cmd_parts)) if other_parts[0] and os.path.isdir(other_parts[0]) else os.path.basename(cmd_parts)), 'w').write(con.connect(cli='cat', path=cmd_parts))"
+            },
+            "parameters": {},
+            "output": false,
+            "post_execute": false,
+            "return_list": false,
+            "with_function": false
+        },
         "up":{
             "command-file": "up.py",
             "command-arguments": {"file":"__file__","path":"__path__","new_name":"__new_name__","data":"__data__"},
             "command-default": {"old_path":"{self.SCRIPT_FILENAME}"},
-            "command-description": "Upload a file",
+            "command-description": "[up] [SRC] [DST] → Upload a file (local → target path)",
+            "command-emoji":"📤",
              "action": {
                 "type": "function",
                 "handler": "con.connect(cli='up', data=base64.b64encode(open(cmd_parts, 'rb').read()).decode('utf-8') ,file=cmd_parts, path=pwd, new_name=other_parts[0])"
@@ -121,6 +144,7 @@
         },
         "-v": {
             "command-description": "Show the current version and package details",
+            "command-emoji":"📦",
             "action": {
                 "type": "function",
                 "handler": "con.info('__version__','__source__','__package_version__','__package_source__','__author__')"
@@ -133,6 +157,7 @@
         },
         "-h": {
             "command-description": "Show available commands and usage information",
+            "command-emoji":"❓",
             "action": {
                 "type": "function",
                 "handler": "con.help('pkg')"
@@ -145,6 +170,7 @@
         },
         "-hole": {
             "command-description": "Retrieve the WebHole source code",
+            "command-emoji":"🕳️",
             "action": {
                 "type": "function",
                 "handler": "con.hole(pkg=cmd_parts,nkey=NKEY)"
@@ -157,6 +183,7 @@
         },
         "-pkgs": {
             "command-description": "List all installed packages",
+            "command-emoji":"📚",
             "action": {
                 "type": "function",
                 "handler": "con.pkgs()"
@@ -169,6 +196,7 @@
         },
         "cls": {
             "command-description": "Clear the terminal screen",
+            "command-emoji":"🧹",
             "action": {
                 "type": "function",
                 "handler": "os.system('cls' if os.name=='nt' else 'clear')"
@@ -181,9 +209,23 @@
         },
         "exit": {
             "command-description": "Exit the application",
+            "command-emoji":"🚪",
             "action": {
                 "type": "function",
                 "handler": "(lambda: (print('Exiting WebHole...'), exit()))()"
+            },
+            "parameters": {},
+            "output": false,
+            "post_execute": false,
+            "return_list": false,
+            "with_function": false
+        },
+        "-r": {
+            "command-description": "Reflesh the application",
+            "command-emoji":"🔄",
+            "action": {
+                "type": "function",
+                "handler": "(globals().update(con=webhole(url=URL, user_key=KEY)), globals().update(pwd=con.connect(value='pwd')), globals().update(config_data=con.config()), print('✅ Refreshed Successfully!'))"
             },
             "parameters": {},
             "output": false,
