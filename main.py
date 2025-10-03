@@ -13,6 +13,7 @@ from pathlib import Path
 import time
 import threading
 import itertools
+import ast
 
 # Create an ArgumentParser object
 parser = argparse.ArgumentParser(
@@ -120,7 +121,7 @@ if URL!=str('None') and KEY!=str('None'):
     try:
         # Start animation
         stop_event = threading.Event()
-        anim_thread = threading.Thread(target=spinner, args=("Connecting", stop_event, "dots"))
+        anim_thread = threading.Thread(target=spinner, args=("📡 Connecting", stop_event, "dots"))
         anim_thread.start()
         con=webhole(url=URL, user_key=KEY)
         # Stop animation
@@ -160,24 +161,110 @@ if URL!=str('None') and KEY!=str('None'):
     xxr3=color.c(']', c_green)
     xxr4=color.c('└─WEBHOLE→ ', c_green)
     xxr_at=color.c('@', c_green)
-    xxr_URL=color.c(URL, c_blue).replace("https://", "").replace("http://", "")
+    xxr_URL=color.c(URL.replace("https://", "").replace("http://", "").rstrip("/"), c_blue)
     xxr_package_name=color.c(package_name, c_white_red)
 
     try:
-        while True:
-            pwd=con.connect(value="pwd")
-            xxr_pwd=color.c(pwd, c_yellow)
-            command=input(xxr1+xxr_package_name+xxr_at+xxr_URL+xxr2+xxr_pwd+xxr3+'\n'+xxr4)
+        # events to control threads
+        stop_event = threading.Event()
+        break_event = threading.Event()
 
-            if not command:
+        # start background watcher
+        def connection_watcher(stop_event, break_event, con, URL, KEY):
+            retry_delays = [5,15,30,60]  # seconds
+            while not stop_event.is_set():
+                time.sleep(10)  # normal connection check every 10s
+                try:
+                    test = webhole(url=URL, user_key=KEY)
+                    if not test.fatal_error:  # still connected
+                        continue
+                    else:
+                        print("\n❌ Lost connection!")
+                except Exception as e:
+                    print(f"\n⚠️ Connection check failed: {e}")
+
+                # try reconnection with backoff
+                for delay in retry_delays:
+                    # countdown loop
+                    for remaining in range(delay, -1, -1):
+                        sys.stdout.write(f"\r🔄 Attempting reconnection in {remaining} sec...   ")
+                        sys.stdout.flush()
+                        time.sleep(1)
+
+                    # clear countdown line before starting spinner
+                    sys.stdout.write("\r" + " " * 60 + "\r")
+                    sys.stdout.flush()
+
+                    # after countdown → show spinner while trying to reconnect
+                    stop_spin = threading.Event()
+                    spin_thread = threading.Thread(target=spinner, args=("📡 Connecting", stop_spin, "dots"))
+                    spin_thread.start()
+
+                    try:
+                        test = webhole(url=URL, user_key=KEY)
+                        stop_spin.set()       # stop spinner
+                        spin_thread.join()
+
+                        # clear spinner line before result
+                        sys.stdout.write("\r" + " " * 60 + "\r")
+                        sys.stdout.flush()
+
+                        if not test.fatal_error:
+                            print("✅ Reconnected successfully!")
+                            con = test
+                            sys.stdout.write(prompt)   # show prompt again
+                            sys.stdout.flush()
+                            break  # break out of retry loop, resume watching
+                    except Exception as e:
+                        stop_spin.set()
+                        spin_thread.join()
+
+                        # clear spinner line before error
+                        sys.stdout.write("\r" + " " * 60 + "\r")
+                        sys.stdout.flush()
+
+                        print(f"⚠️ Reconnect attempt failed: {e}")
+
+
+                else:
+                    # If all retries exhausted
+                    print("❌ Unable to reconnect. Closing tool.")
+                    break_event.set()
+                    break
+
+
+        watcher_thread = threading.Thread(
+            target=connection_watcher,
+            args=(stop_event, break_event, con, URL, KEY),
+            daemon=True
+        )
+        watcher_thread.start()
+
+        while True:
+            pwd = con.connect(value="pwd")
+            xxr_pwd = color.c(pwd, c_yellow)
+            prompt = xxr1+xxr_package_name+xxr_at+xxr_URL+xxr2+xxr_pwd+xxr3+'\n'+xxr4
+
+            # if connection is lost, break before asking
+            if break_event.is_set():
+                break
+
+            try:
+                command = input(prompt)
+            except EOFError:
+                break
+
+            # if background thread flagged connection loss → break
+            if break_event.is_set():
+                break
+
+            if not command.strip():
                 continue
-            
+
             cmd_options,cmd,cmd_parts = match_command(command, cmd_data)
             other_parts=str(command).split()[2:]
             other_parts = other_parts if other_parts else ['None']
-            #print(other_parts)
 
-            
             if cmd_options is not None and cmd is not None:
                 c_action = cmd_options["action"]
                 c_params = cmd_options["parameters"]
@@ -193,7 +280,7 @@ if URL!=str('None') and KEY!=str('None'):
                         c_params[key] = globals()[value]
                     else:
                         c_params[key] = value
-                        
+
                 if c_action['type'] == "query":
                     output = con.connect(cli=cmd, **c_params)
 
@@ -205,7 +292,7 @@ if URL!=str('None') and KEY!=str('None'):
 
                 if bool(c_output) and not bool(c_return_list):
                     print(output)
-                
+
                 if bool(c_return_list) and bool(c_output):
                     import ast
                     lst = ast.literal_eval(output)
@@ -214,20 +301,19 @@ if URL!=str('None') and KEY!=str('None'):
                             print(item)
                     else:
                         print("❌ Error: Expected a list but got:", type(output))
-                
+
                 if not isinstance(c_with_function, bool):
                     for func_call in c_with_function:
                         eval(func_call)
-            
+
             else:
                 print(con.connect(command))
-    
+
     except KeyboardInterrupt:
         print("\nExiting...")
+    finally:
+        stop_event.set()  # stop the watcher thread
         sys.exit(0)
-    '''
-    except Exception as e:
-        print(f"Error: {str(e)}")'''
 elif HOLE!=str('None'):
     if NKEY!=str('None'):
         con=webhole(hole=str(HOLE), nkey=NKEY)

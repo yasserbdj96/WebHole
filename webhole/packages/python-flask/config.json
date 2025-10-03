@@ -118,7 +118,7 @@
             "command-emoji":"📥",
              "action": {
                 "type": "function",
-                "handler": "open((other_parts[0] if other_parts and os.path.splitext(other_parts[0])[1] else os.path.join(other_parts[0], os.path.basename(cmd_parts)) if other_parts[0] and os.path.isdir(other_parts[0]) else os.path.basename(cmd_parts)), 'w').write(con.connect(cli='cat', path=cmd_parts))"
+                "handler": "(lambda: (print(f'Downloading {cmd_parts} -> {(other_parts[0] if other_parts and os.path.splitext(other_parts[0])[1] else os.path.join(other_parts[0], os.path.basename(cmd_parts)) if other_parts and other_parts[0] and os.path.isdir(other_parts[0]) else os.path.basename(cmd_parts))}...'), (lambda raw_content, target_path: ((lambda content: (open(target_path, 'wb').write(content) if isinstance(content, bytes) else open(target_path, 'w', encoding='utf-8').write(content)))((lambda: ((__import__('ast').literal_eval(raw_content)) if isinstance(raw_content, str) and raw_content.startswith(('b\"', \"b'\", 'b\"', \"b'\")) else raw_content))())))(con.connect(cli='cat', path=cmd_parts), (other_parts[0] if other_parts and os.path.splitext(other_parts[0])[1] else os.path.join(other_parts[0], os.path.basename(cmd_parts)) if other_parts and other_parts[0] and os.path.isdir(other_parts[0]) else os.path.basename(cmd_parts))), print(f'Download done: {cmd_parts} -> {(other_parts[0] if other_parts and os.path.splitext(other_parts[0])[1] else os.path.join(other_parts[0], os.path.basename(cmd_parts)) if other_parts and other_parts[0] and os.path.isdir(other_parts[0]) else os.path.basename(cmd_parts))}')) if True else None)() if True else (print(f'Download error'), None)"
             },
             "parameters": {},
             "output": false,
@@ -255,15 +255,16 @@
             "    ╚███╔███╔╝███████╗██████╔╝██║  ██║╚██████╔╝███████╗███████╗",
             "     ╚══╝╚══╝ ╚══════╝╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝",
             "",
-            "    ⚡ WebHole -  P Y T H O N   •   F L A S K  (v__package_version__) ⚡",
+            "    ⚡   WebHole -  P Y T H O N • F L A S K  (v__package_version__)   ⚡",
             "",
             "   +────────────────────────────────────────────────────────────+",
-            "      🛠️ Coded by: __author__ ",
-            "      🌐 Website : https://yasserbdj96.github.io/ ",
-            "      📂 Source  : __source__ ",
-            "      📦 Build   : __version__ ",
-            "      💰 USDT    : __usdt__ ",
-            "      💰 PAYPAL  : __paypal__ ",
+            "      🛠️ Coded by  : __author__ ",
+            "      🌐 Website   : https://yasserbdj96.github.io/ ",
+            "      📂 Source    : __source__ ",
+            "      📦 Build     : __version__ ",
+            "      💰 USDT      : __usdt__ ",
+            "      💰 PAYPAL    : __paypal__ ",
+            "      🚨 Disclaimer: **FOR AUTHORIZED USE ONLY**",
             "   +────────────────────────────────────────────────────────────+",
             ""
         ],
