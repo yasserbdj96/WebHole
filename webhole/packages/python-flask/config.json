@@ -16,12 +16,11 @@
         "ls": {
             "command-file": "ls.py",
             "command-arguments": {"path":"__path__"},
-            "command-function": {"function":"fn_listsort","path":"{self.packages}.__functions__.fn_listsort"},
             "command-description": "[ls] → List the contents of the current directory.",
             "command-emoji":"📂",
             "action": {
                 "type": "function",
-                "handler": "con.connect(cli='ls', path=pwd, **c_params)"
+                "handler": "con.fn_listsort(con.connect(cli='ls', path=pwd, **c_params), separator=' '*9)"
             },
             "parameters": {},
             "output": true,
@@ -47,12 +46,11 @@
         "tree -f": {
             "command-file": "tree_f.py",
             "command-arguments": {"path":"__path__"},
-            "command-function": {"function":"fn_listsort","path":"{self.packages}.__functions__.fn_listsort"},
             "command-description": "[tree -f] → Display the directory structure in a tree view with full file paths",
             "command-emoji":"🌲",
             "action": {
                 "type": "function",
-                "handler": "con.connect(cli='tree -f', path=pwd, cf=False, **c_params)"
+                "handler": "con.fn_listsort(con.connect(cli='tree -f', path=pwd, cf=False, **c_params), separator=' '*9)"
             },
             "parameters": {},
             "output": true,

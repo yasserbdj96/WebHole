@@ -16,11 +16,10 @@
         "ls": {
             "command-file": "ls.py",
             "command-arguments": {"path":"__path__"},
-            "command-function": {"function":"fn_listsort","path":"{self.packages}.__functions__.fn_listsort"},
             "command-description": "List files in a directory",
             "action": {
                 "type": "function",
-                "handler": "con.connect(cli='ls', path=pwd, **c_params)"
+                "handler": "con.fn_listsort(con.connect(cli='ls', path=pwd, **c_params), separator='    |    ')"
             },
             "parameters": {},
             "output": true,
@@ -49,7 +48,7 @@
             "command-description": "Display directory structure in a tree format with full paths",
             "action": {
                 "type": "function",
-                "handler": "con.connect(cli='tree -f', path=pwd, cf=False, **c_params)"
+                "handler": "con.fn_listsort(con.connect(cli='tree -f', path=pwd, cf=False, **c_params), separator=' '*9)"
             },
             "parameters": {},
             "output": true,
